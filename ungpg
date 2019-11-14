@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+CWD=`pwd`
+EXTENSION_NAME="gpg"
+
+usage () {
+  echo "usage: $(basename "$0") [PATH [PATH ...]]"
+}
+
+if [ $# -le 0 ]; then
+  usage
+  exit 0
+fi
+
+while [ $# -ne 0 ]; do
+  name=`basename "$1"`
+  name=${name%".$EXTENSION_NAME"}
+  name="$CWD/$name"
+  gpg -o "$name" -d "$1"
+  shift
+done
+
